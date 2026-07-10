@@ -1,16 +1,18 @@
 import logging
-from app.modules.acore_adapter.infrastructure.remote.soap_client import AcoreSoapClient
-from app.common.ui.console import console
-
+from app.modules.acore_adapter.application.remote.gateways import WorldCommandGateway
 logger = logging.getLogger(__name__)
+from app.modules.acore_adapter.infrastructure.remote.dto import (
+    WorldCommandResult,
+)
 
 class CheckSoapConnectionUseCase:
-    def __init__(self, client:AcoreSoapClient):
-        self.client = client
-        
-    async def execute(self):
-        result = await self.client.execute("server info")
-        console.print("COMMAND:")
-        console.print(result.command)
-        console.print("RAW RESPONSE:")
-        console.print(result.raw_response)
+    def __init__(
+        self,
+        soap_client: WorldCommandGateway,
+    ) -> None:
+        self._soap_client = soap_client
+
+    async def execute(self) -> WorldCommandResult:
+        return await self._soap_client.execute(
+            "server info"
+        )

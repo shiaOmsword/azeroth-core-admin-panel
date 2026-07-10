@@ -10,4 +10,6 @@ class CharacterModel(Base):
     account: Mapped[int] = mapped_column(Integer, nullable=False)
     name: Mapped[str] = mapped_column(String(12), nullable=False)
     level: Mapped[int] = mapped_column(Integer, nullable=False)
-    money: Mapped[int] = mapped_column(BigInteger, nullable=False)    
+    money: Mapped[int] = mapped_column(BigInteger, nullable=False)
+    extraBonusTalentCount: Mapped[int] = mapped_column(Integer, nullable=False, default=0)   
+    online: Mapped[int] = mapped_column(Integer, nullable=False, default=0)   

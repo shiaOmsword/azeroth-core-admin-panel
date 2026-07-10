@@ -23,6 +23,11 @@ class CharacterRepository:
         characters = [CharacterMapper.map_to_dto(model) for model in models]
         return CharactersDTO.from_characters(characters)
     
+    async def get_by_id(self, id:int) -> CharacterModel | None:
+        stmt = select(CharacterModel).where(CharacterModel.guid == id)
+        result = await self.session.execute(stmt)
+        return result.scalar_one_or_none()
+    
     async def get_by_account_id(self, account_id:int) -> CharactersDTO:
         stmt = (
             select(CharacterModel)
@@ -64,3 +69,14 @@ class CharacterRepository:
         )
 
         await self.session.execute(stmt)
+        
+    async def set_extra_talent(self, guid:int, value:int) -> CharacterDTO:
+        char = await self.get_by_id(guid)
+        if char is None:
+            raise Exception(
+                f"Char with id={guid} was not found"
+            )
+        char.extraBonusTalentCount = value
+        await self.session.flush()
+        await self.session.refresh(char)
+        return CharacterMapper.map_to_dto(char)

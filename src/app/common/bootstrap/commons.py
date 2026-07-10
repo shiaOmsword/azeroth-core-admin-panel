@@ -11,12 +11,12 @@ from app.common.infrastructure.db.providers import(
     WorldSessionProvider,
 )
 from app.common.infrastructure.db.uow import (
-    UnitsOfWork, CharactersUnitOfWorkFactory
+    UnitsOfWork, CharactersUnitOfWorkFactory, RealmlistsUnitOfWorkFactory
 )
 from app.common.protocols.uows import UowsProtocol
-from app.modules.acore_adapter.infrastructure.remote.factory import build_acore_soap_client
-from app.modules.acore_adapter.infrastructure.remote.soap_client import AcoreSoapClient
 
+from app.modules.acore_adapter.infrastructure.remote.factory import build_acore_soap_client
+from app.modules.acore_adapter.application.remote.gateways import WorldCommandGateway
 class RegisterCommons:
     def __init__(self, container: punq.Container):
         self.container = container
@@ -40,9 +40,11 @@ class RegisterCommons:
         )
         
         self.container.register(CharactersUnitOfWorkFactory)
+        self.container.register(RealmlistsUnitOfWorkFactory)
         self.container.register(
             UowsProtocol,
             UnitsOfWork,
         )
         
-        self.container.register(AcoreSoapClient, instance=build_acore_soap_client())
+        soap_client = build_acore_soap_client()
+        self.container.register(WorldCommandGateway, instance=soap_client)

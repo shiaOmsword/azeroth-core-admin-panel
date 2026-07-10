@@ -8,6 +8,8 @@ class CharacterDTO:
     name:str
     level:int
     money:int
+    extraBonusTalentCount: int = 0
+    online: int = 0
     
 @dataclass
 class CharactersDTO:

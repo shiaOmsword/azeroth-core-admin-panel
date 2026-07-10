@@ -19,6 +19,8 @@ class CharacterMapper:
                 level=data.level,
                 money=data.money,
                 account=data.account,
+                extraBonusTalentCount=data.extraBonusTalentCount,
+                online=data.online,
             )
         return empty_character
         
