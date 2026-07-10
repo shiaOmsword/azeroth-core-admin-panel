@@ -1,0 +1,28 @@
+[tool.poetry]
+name = "local-admin-panel"
+version = "0.1.0"
+description = "sandbox"
+authors = ["Omsi"]
+packages = [{ include = "app", from = "src" }]
+
+[tool.poetry.dependencies]
+python = ">=3.12,<3.13"
+httpx = "^0.28.1"
+pydantic = "^2.13.4"
+pydantic-settings = "^2.14.2"
+python-dotenv = "^1.2.2"
+rich = "^15.0.0"
+pyyaml = "^6.0.3"
+typer = "^0.26.8"
+punq = "^0.8.0"
+asyncpg = "^0.31.0"
+asyncmy = "^0.2.11"
+alembic = "^1.18.5"
+cryptography = "^49.0.0"
+
+[tool.poetry.scripts]
+panel = "app.main:main"
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
