@@ -1,6 +1,7 @@
 from app.common.protocols.uows import UowsProtocol
 from app.modules.acore_adapter.infrastructure.characters.db.dto import CharactersDTO
 class GetCharacterByAccountIdUseCase:
+    """Get all characters by account id"""
     def __init__(
         self,
         uows:UowsProtocol

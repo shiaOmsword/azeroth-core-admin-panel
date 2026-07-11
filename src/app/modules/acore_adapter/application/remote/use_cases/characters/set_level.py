@@ -1,13 +1,11 @@
-from app.modules.acore_adapter.application.remote.commands import (
-    WorldCommands,
-)
-from app.modules.acore_adapter.application.remote.gateways import (
+from app.modules.acore_adapter.application.remote.commands import character
+from app.modules.acore_adapter.common.gateways import (
     WorldCommandGateway,
 )
 from app.modules.acore_adapter.infrastructure.remote.dto import (
     WorldCommandResult,
 )
-
+from app.modules.acore_adapter.domain.characters.exceptions.errors import CharacterLevelRequiredError, CharacterNameEmptyError
 
 class SetCharacterLevelUseCase:
     def __init__(
@@ -22,14 +20,12 @@ class SetCharacterLevelUseCase:
         level: int,
     ) -> WorldCommandResult:
         if not character_name.strip():
-            raise ValueError("Character name cannot be empty")
+            raise CharacterNameEmptyError()
 
         if not 1 <= level <= 80:
-            raise ValueError(
-                "Character level must be between 1 and 80"
-            )
+            raise CharacterLevelRequiredError()
 
-        command = WorldCommands.set_character_level(
+        command = character.CharacterWorldCommands().set_character_level(
             character_name=character_name,
             level=level,
         )

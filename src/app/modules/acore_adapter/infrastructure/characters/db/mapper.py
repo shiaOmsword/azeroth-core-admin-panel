@@ -1,6 +1,6 @@
 from __future__ import annotations
 from app.modules.acore_adapter.infrastructure.characters.db.models import CharacterModel
-from app.modules.acore_adapter.infrastructure.characters.db.dto import CharacterDTO
+from app.modules.acore_adapter.domain.characters.entity.character import CharacterDTO
 
 empty_character = CharacterDTO(
     guid=0,
@@ -9,6 +9,7 @@ empty_character = CharacterDTO(
     money=0,
     account=0,
 )
+
 class CharacterMapper:
     @staticmethod
     def map_to_dto(data:CharacterModel|None) -> CharacterDTO:

@@ -1,7 +1,10 @@
 from app.modules.acore_adapter.infrastructure.characters.db.uow import CharactersUnitOfWork
 from app.modules.acore_adapter.infrastructure.auth.realmlist.db.uow import RealmlistUnitOfWork
 
-from app.common.infrastructure.db.providers import CharactersSessionProvider, AuthSessionProvider
+from app.common.infrastructure.db.providers import (
+    CharactersSessionProvider, 
+    AuthSessionProvider
+)
 from dataclasses import dataclass
 
 @dataclass(frozen=True, slots=True)

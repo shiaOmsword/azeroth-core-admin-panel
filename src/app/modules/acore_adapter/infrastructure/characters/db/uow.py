@@ -3,6 +3,7 @@ from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker
 
 from app.modules.acore_adapter.infrastructure.characters.db.repository import CharacterRepository
 from app.common.infrastructure.db.providers import CharactersSessionProvider
+from app.common.errors.base_exceptions import UowActivationError
 
 class CharactersUnitOfWork:
     def __init__(self, characters_provider: CharactersSessionProvider):
@@ -12,12 +13,12 @@ class CharactersUnitOfWork:
 
     async def commit(self) -> None:
         if self.session is None:
-            raise RuntimeError("Unit of work is not active")
+            raise UowActivationError()
         await self.session.commit()
     
     async def rollback(self) -> None:
         if self.session is None:
-            raise RuntimeError("Unit of work is not active")
+            raise UowActivationError()
         await self.session.rollback()
         
     async def __aenter__(self):

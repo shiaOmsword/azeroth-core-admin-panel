@@ -1,14 +1,14 @@
 import httpx
 import html
 import xml.etree.ElementTree as ET
-from app.modules.acore_adapter.infrastructure.remote.exceptions import (
+from app.modules.acore_adapter.domain.remote.exceptions.exceptions import (
     WorldserverSoapCommandError,
     WorldserverSoapConnectionError,
+    WorldServerCommandParserError,
+    WorldServerCommandSoapFaultError
 )
+from app.modules.acore_adapter.domain.remote.entity.world_command import WorldCommandResult
 
-from app.modules.acore_adapter.infrastructure.remote.dto import (
-    WorldCommandResult,
-)
 class AcoreSoapClient:
     def __init__(
         self, 
@@ -46,10 +46,10 @@ class AcoreSoapClient:
 
         except httpx.RequestError as exc:
             raise WorldserverSoapConnectionError(
-                "Cannot connect to worldserver SOAP. "
-                f"URL={self._base_url!r}. "
-                f"Error={type(exc).__name__}: {exc!r}"
-            ) from exc
+                url=self._base_url,
+                error_name=type(exc).__name__,
+                error=exc,
+            )
 
         return self._parse_response(
             command=command,
@@ -67,17 +67,11 @@ class AcoreSoapClient:
         try:
             root = ET.fromstring(xml)
         except ET.ParseError as exc:
-            raise WorldserverSoapCommandError(
-                f"Invalid SOAP XML response. "
-                f"Status={status_code}. "
-                f"Body={xml}"
-            ) from exc
+            raise WorldServerCommandParserError(status_code, xml) 
 
         for element in root.iter():
             if element.tag.endswith("faultstring"):
-                raise WorldserverSoapCommandError(
-                    element.text or "Unknown SOAP fault"
-                )
+                raise WorldServerCommandSoapFaultError(text=element.text)
 
         for element in root.iter():
             if element.tag.endswith("result"):
@@ -87,9 +81,8 @@ class AcoreSoapClient:
                 )
 
         raise WorldserverSoapCommandError(
-            f"Unexpected SOAP response. "
-            f"Status={status_code}. "
-            f"Body={xml}"
+            status_code=status_code,
+            xml=xml,
         )
                     
     def _build_envelope(self, command: str) -> str:

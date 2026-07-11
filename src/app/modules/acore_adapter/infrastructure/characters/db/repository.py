@@ -4,8 +4,11 @@ from sqlalchemy import select, update
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.modules.acore_adapter.infrastructure.characters.db.models import CharacterModel
-from app.modules.acore_adapter.infrastructure.characters.db.dto import CharacterDTO, CharactersDTO
+from app.modules.acore_adapter.domain.characters.entity.character import CharacterDTO, CharactersDTO
 from app.modules.acore_adapter.infrastructure.characters.db.mapper import CharacterMapper
+
+from app.common.errors.base_exceptions import NotFoundError
+
 class CharacterRepository:
     def __init__(self, session: AsyncSession) -> None:
         self.session = session
@@ -60,7 +63,7 @@ class CharacterRepository:
         if model:
             return CharacterMapper.map_to_dto(model)
 
-
+    # TODO need to refactor method and add use_case
     async def set_money(self, guid: int, money: int) -> None:
         stmt = (
             update(CharacterModel)
@@ -70,12 +73,11 @@ class CharacterRepository:
 
         await self.session.execute(stmt)
         
-    async def set_extra_talent(self, guid:int, value:int) -> CharacterDTO:
+    async def set_extra_talent(self, guid:int, value:int) -> CharacterDTO | str:
         char = await self.get_by_id(guid)
         if char is None:
-            raise Exception(
-                f"Char with id={guid} was not found"
-            )
+            return NotFoundError()
+        
         char.extraBonusTalentCount = value
         await self.session.flush()
         await self.session.refresh(char)

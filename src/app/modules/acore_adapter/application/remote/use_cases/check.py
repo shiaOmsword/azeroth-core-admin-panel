@@ -1,5 +1,5 @@
 import logging
-from app.modules.acore_adapter.application.remote.gateways import WorldCommandGateway
+from app.modules.acore_adapter.common.gateways import WorldCommandGateway
 logger = logging.getLogger(__name__)
 from app.modules.acore_adapter.infrastructure.remote.dto import (
     WorldCommandResult,

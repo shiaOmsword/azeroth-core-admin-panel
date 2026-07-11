@@ -2,7 +2,7 @@ from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker
 
 from app.modules.acore_adapter.infrastructure.auth.realmlist.db.repository import RealmlistRepository
 from app.common.infrastructure.db.providers import AuthSessionProvider
-
+from app.common.errors.base_exceptions import UowActivationError
 class RealmlistUnitOfWork:
     def __init__(self, auth_provider: AuthSessionProvider):
         self.auth_provider = auth_provider
@@ -11,12 +11,12 @@ class RealmlistUnitOfWork:
 
     async def commit(self) -> None:
         if self.session is None:
-            raise RuntimeError("Unit of work is not active")
+            raise UowActivationError()
         await self.session.commit()
     
     async def rollback(self) -> None:
         if self.session is None:
-            raise RuntimeError("Unit of work is not active")
+            raise UowActivationError()
         await self.session.rollback()
         
     async def __aenter__(self):

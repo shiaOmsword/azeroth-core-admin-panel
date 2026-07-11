@@ -5,7 +5,8 @@ from app.modules.acore_adapter.infrastructure.auth.realmlist.db.models import Re
 from app.modules.acore_adapter.infrastructure.auth.realmlist.db.dto import RealmListDTO, RealmListsDTO
 from app.modules.acore_adapter.infrastructure.auth.realmlist.db.mapper import RealmlistMapper
 
-class RealmListNotFoundError(Exception):
+from app.common.errors.base_exceptions import NotFoundError
+class RealmListNotFoundError(NotFoundError):
     pass
 
 class RealmlistRepository:
@@ -34,9 +35,7 @@ class RealmlistRepository:
     async def set_local_addres(self, id: int, addres: str) -> RealmListDTO:
         realm = await self.get_by_id(id)
         if realm is None:
-            raise RealmListNotFoundError(
-                f"Realm with id={id} was not found"
-            )
+            raise RealmListNotFoundError()
         realm.localAddress = addres
         await self.session.flush()
         await self.session.refresh(realm)
