@@ -1,20 +1,20 @@
 from app.modules.acore_adapter.infrastructure.characters.db.uow import CharactersUnitOfWork
-from app.modules.acore_adapter.infrastructure.auth.realmlist.db.uow import RealmlistUnitOfWork
+from app.modules.acore_adapter.infrastructure.auth.auth_uow import AuthUnitOfWork
 
 from app.common.infrastructure.db.providers import (
-    CharactersSessionProvider, 
-    AuthSessionProvider
+    CharactersSessionProvider, AuthSessionProvider
 )
 from dataclasses import dataclass
 
+
 @dataclass(frozen=True, slots=True)
-class RealmlistsUnitOfWorkFactory:
+class AuthUnitOfWorkFactory:
     auth_provider: AuthSessionProvider
-    
-    def __call__(self, *args, **kwds):
-        return RealmlistUnitOfWork(
-            auth_provider=self.auth_provider
-        )    
+
+    def __call__(self) -> AuthUnitOfWork:
+        return AuthUnitOfWork(
+            auth_provider=self.auth_provider,
+        )
     
 @dataclass(frozen=True, slots=True)
 class CharactersUnitOfWorkFactory:
@@ -29,4 +29,4 @@ class CharactersUnitOfWorkFactory:
 @dataclass(frozen=True, slots=True)
 class UnitsOfWork:
     characters_uow: CharactersUnitOfWorkFactory
-    realmlists_uow: RealmlistsUnitOfWorkFactory
+    auth_uow: AuthUnitOfWorkFactory

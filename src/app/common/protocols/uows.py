@@ -1,6 +1,6 @@
 from typing import Protocol
-from app.modules.acore_adapter.common.protocols import CharactersUnitOfWorkFactoryProtocol, RealmlistsUnitOfWorkFactoryProtocol
+from app.modules.acore_adapter.common.interface.protocols import CharactersUnitOfWorkFactoryProtocol, AuthUnitOfWorkFactoryProtocol
 
 class UowsProtocol(Protocol):
     characters_uow: CharactersUnitOfWorkFactoryProtocol
-    realmlists_uow: RealmlistsUnitOfWorkFactoryProtocol
+    auth_uow: AuthUnitOfWorkFactoryProtocol

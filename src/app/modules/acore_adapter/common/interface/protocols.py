@@ -1,18 +1,16 @@
 from typing import Protocol, Self
 from types import TracebackType
+
 from .repositories import CharactersRepositoryProtocol, RealmlistRepositoryProtocol
 
-
-
-class RealmlistsUnitOfWorkProtocol(Protocol):
+class AuthUnitOfWorkProtocol(Protocol):
     realmlists: RealmlistRepositoryProtocol
-
     async def commit(self) -> None:
         ...
         
     async def rollback(self) -> None:
         ...
-                
+
     async def __aenter__(self) -> Self:
         ...
 
@@ -22,10 +20,7 @@ class RealmlistsUnitOfWorkProtocol(Protocol):
         exc: BaseException | None,
         traceback: TracebackType | None,
     ) -> None:
-        ...
-
-
-    
+        ...   
     
 class CharactersUnitOfWorkProtocol(Protocol):
     characters: CharactersRepositoryProtocol
@@ -51,6 +46,6 @@ class CharactersUnitOfWorkFactoryProtocol:
     def __call__(self, *args, **kwds) -> CharactersUnitOfWorkProtocol:
         ...
         
-class RealmlistsUnitOfWorkFactoryProtocol:
-    def __call__(self, *args, **kwds) -> RealmlistsUnitOfWorkProtocol:
+class AuthUnitOfWorkFactoryProtocol:
+    def __call__(self, *args, **kwds) -> AuthUnitOfWorkProtocol:
         ...        

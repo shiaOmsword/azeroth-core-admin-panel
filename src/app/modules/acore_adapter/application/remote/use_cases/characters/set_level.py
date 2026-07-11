@@ -1,5 +1,5 @@
 from app.modules.acore_adapter.application.remote.commands import character
-from app.modules.acore_adapter.common.gateways import (
+from app.modules.acore_adapter.common.interface.gateways import (
     WorldCommandGateway,
 )
 from app.modules.acore_adapter.infrastructure.remote.dto import (

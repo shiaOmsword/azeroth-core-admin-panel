@@ -11,6 +11,6 @@ class ListRealmlistsUseCase:
         self.uows = uows
         
     async def execute(self, page:int, limit:int = 50) -> RealmListsDTO:
-        async with self.uows.realmlists_uow() as uow:
+        async with self.uows.auth_uow() as uow:
             realms = await uow.realmlists.list(offset=page*limit)
         return realms

@@ -11,7 +11,7 @@ class SetRealmlistAddresUseCase:
         self.uows = uows
         
     async def execute(self, id:int, addres:str) -> RealmListDTO:
-        async with self.uows.realmlists_uow() as uow:
+        async with self.uows.auth_uow() as uow:
             realm = await uow.realmlists.set_local_addres(id=id,addres=addres)
             await uow.commit()
         return realm
