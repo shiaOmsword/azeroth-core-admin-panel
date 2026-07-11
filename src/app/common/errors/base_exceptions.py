@@ -9,9 +9,11 @@ class BaseErrorsMessagesCatalog(StrEnum):
     EXTERNAL_SERVICE_ERROR_MESSAGE = "External service error"
     INFRASTRUCTURE_ERROR_MESSAGE = "Infrastrcture error"
     UNIT_OF_WORK_ERROR_MESSAGE = "Unit of work is not active"
+    DOMAIN_ERROR_MESSAGE = "Domain error"
 
 class BaseErrorsCodesCatalog(StrEnum):
     APP_ERROR_CODE = "app.error"
+    DOMAIN_ERROR_CODE = "domain.error"
     VALIDATION_ERROR_CODE = "validation.error"
     NOT_FOUND_ERROR_CODE = "entity.not_found.error"
     CONFLICT_ERROR_CODE = "conflict.error"
@@ -34,6 +36,12 @@ class AppError(Exception):
             self.message,
             self.code,
         )
+        
+class DomainError(AppError):
+    """Base domain error"""
+    message = BaseErrorsMessagesCatalog.DOMAIN_ERROR_MESSAGE.value
+    code = BaseErrorsCodesCatalog.DOMAIN_ERROR_CODE.value
+    
         
 class ValidationError(AppError):
     """Input validation error"""
