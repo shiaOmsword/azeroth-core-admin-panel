@@ -1,6 +1,6 @@
 import punq
 from .commons import RegisterCommons
-from .use_cases import RegisterUseCases
+from app.common.bootstrap.register_use_cases import RegisterUseCases
 
 class BuildDi:
     def build(self) -> punq.Container:

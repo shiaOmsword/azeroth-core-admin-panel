@@ -1,13 +1,7 @@
 import typer
-import punq
 from typing import Annotated
 import asyncio
-from app.modules.acore_adapter.application.characters.use_cases.get_all import ListCharactersUseCase
-from app.modules.acore_adapter.application.characters.use_cases.get_by_id import GetCharacterByIdUseCase
-from app.modules.acore_adapter.application.characters.use_cases.get_by_account_id import GetCharacterByAccountIdUseCase
-from app.modules.acore_adapter.application.characters.use_cases.get_by_name import GetCharacterByCharacterNameUseCase
-from app.modules.acore_adapter.application.characters.use_cases.set_extra_talent_points import SetCharacterExtraTalentPointsUseCase
-
+from app.common.bootstrap.use_cases.characters import CHARACTER_USE_CASES_GROUP
 from app.common.bootstrap.di import BuildDi
 from app.common.ui.console import console
 
@@ -16,25 +10,25 @@ app = typer.Typer(help="Команды для работы с персонажа
 
 async def async_list_characters(page:int = 0) -> None:
     container = BuildDi().build()
-    list_use_case = container.resolve(ListCharactersUseCase)
+    list_use_case = container.resolve(CHARACTER_USE_CASES_GROUP.get("list"))
     result = await list_use_case.execute(page=page)
     console.print(result)
     
 async def async_get_character_by_account_id(account_id:int) -> None:
     container = BuildDi().build()
-    use_case = container.resolve(GetCharacterByAccountIdUseCase)
+    use_case = container.resolve(CHARACTER_USE_CASES_GROUP.get("get_by_account_id"))
     result = await use_case.execute(account_id)
     console.print(result)
     
 async def async_get_character_by_name(name:str) -> None:
     container = BuildDi().build()
-    use_case = container.resolve(GetCharacterByCharacterNameUseCase)
+    use_case = container.resolve(CHARACTER_USE_CASES_GROUP.get("get_by_character_name"))
     result = await use_case.execute(name)
     console.print(result)    
     
 async def set_talents(char_id:int, value:int) -> None:
     container = BuildDi().build()
-    use_case = container.resolve(SetCharacterExtraTalentPointsUseCase)
+    use_case = container.resolve(CHARACTER_USE_CASES_GROUP.get("set_extra_talent_points"))
     result = await use_case.execute(id=char_id,value=value)
     console.print(result)    
     
