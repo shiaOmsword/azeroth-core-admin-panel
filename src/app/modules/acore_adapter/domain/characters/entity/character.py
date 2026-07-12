@@ -8,8 +8,18 @@ class CharacterDTO:
     name:str
     level:int
     money:int
+    race:int
+    character_class:int
+    gender:int
+    xp:int
+    skin:int
+    total_time:int
+    zone:int
+    health:int
+    power1:int
     extraBonusTalentCount: int = 0
     online: int = 0
+    
     
 @dataclass
 class CharactersDTO:

@@ -4,6 +4,7 @@ from punq import Container
 from app.common.bootstrap.use_cases.characters import CHARACTER_USE_CASES_GROUP
 from app.common.bootstrap.di import BuildDi
 from app.common.ui.console import console
+from app.modules.acore_adapter.application.characters.dto import CharacterReadDTO
 
 class ExecutableUseCase(Protocol):
     async def execute(self, *args:Any, **kwargs:Any)->Any:
@@ -42,7 +43,7 @@ async def async_get_character_by_name(name:str) -> None:
         CHARACTER_USE_CASES_GROUP["get_by_character_name"],
         name=name
     )
-    
+
 async def set_talents(char_id:int, value:int) -> None:
     await runner.run(
         CHARACTER_USE_CASES_GROUP["set_extra_talent_points"],

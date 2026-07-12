@@ -1,6 +1,7 @@
 
 from app.common.protocols.uows import UowsProtocol
 from app.modules.acore_adapter.infrastructure.characters.db.dto import CharacterDTO
+from app.modules.acore_adapter.application.characters.dto import CharacterReadDTO
 from app.modules.acore_adapter.domain.characters.exceptions.errors import CharacterIsOnlineError, CharacterNotFoundError
 import logging
 logger = logging.getLogger(__name__)
@@ -9,7 +10,7 @@ class ChangeCharacterNameUseCase:
     def __init__(self, uows:UowsProtocol) -> None:
         self.uows = uows
     
-    async def execute(self, char_id:int, value:str) -> CharacterDTO|None:
+    async def execute(self, char_id:int, value:str) -> CharacterReadDTO|None:
         async with self.uows.characters_uow() as uow:
             character = await uow.characters.get_by_guid(char_id) or {}
             
@@ -26,4 +27,4 @@ class ChangeCharacterNameUseCase:
             character.name = value.strip()
             await uow.characters.update(character)
             await uow.commit()
-        return character
+        return CharacterReadDTO.map_to_read_dto(character)

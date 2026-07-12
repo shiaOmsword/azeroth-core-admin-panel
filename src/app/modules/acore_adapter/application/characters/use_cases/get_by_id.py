@@ -1,5 +1,6 @@
 from app.common.protocols.uows import UowsProtocol
 from app.modules.acore_adapter.infrastructure.characters.db.dto import CharacterDTO
+from app.modules.acore_adapter.application.characters.dto import CharacterReadDTO
 from app.modules.acore_adapter.domain.characters.exceptions.errors import NotFoundError
 import logging
 
@@ -19,4 +20,4 @@ class GetCharacterByIdUseCase:
             if not character:
                 logger.warning("%s",NotFoundError().message)
                 return None
-        return character
+        return CharacterReadDTO.map_to_read_dto(character)
