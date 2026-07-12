@@ -1,13 +1,9 @@
 import punq
 from typing import Type, TypeVar
 from app.modules.acore_adapter.application.tests.use_cases.di_checker import TestDiRegister
-
 from app.common.bootstrap.use_cases.characters import CHARACTER_USE_CASES_GROUP
-from app.modules.acore_adapter.application.remote.use_cases.execute_command import ExecuteWorldCommandUseCase
-from app.modules.acore_adapter.application.remote.use_cases.check import CheckSoapConnectionUseCase
-
-from app.modules.acore_adapter.application.auth.realmlist.use_cases.get_all import ListRealmlistsUseCase
-from app.modules.acore_adapter.application.auth.realmlist.use_cases.set_addres import SetRealmlistAddresUseCase
+from app.common.bootstrap.use_cases.auth import AUTH_USECASES_GROUP
+from app.common.bootstrap.use_cases.world import WORLD_USE_CASES_GROUP
 
 T = TypeVar("T")
 class RegisterUseCases:
@@ -20,14 +16,11 @@ class RegisterUseCases:
 
     def register(self) -> None:
         self._cycle_usecases(CHARACTER_USE_CASES_GROUP.values())
-
-        self.container.register(CheckSoapConnectionUseCase)
-        self.container.register(ExecuteWorldCommandUseCase)
+        self._cycle_usecases(AUTH_USECASES_GROUP.values())
+        self._cycle_usecases(WORLD_USE_CASES_GROUP.values())
         
         self.container.register(TestDiRegister)
 
-        self.container.register(ListRealmlistsUseCase)
-        self.container.register(SetRealmlistAddresUseCase)
     
     
     

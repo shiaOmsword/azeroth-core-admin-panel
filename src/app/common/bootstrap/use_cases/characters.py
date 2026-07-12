@@ -5,6 +5,7 @@ from app.modules.acore_adapter.application.characters.use_cases.get_by_account_i
 from app.modules.acore_adapter.application.characters.use_cases.get_by_name import GetCharacterByCharacterNameUseCase
 from app.modules.acore_adapter.application.characters.use_cases.set_extra_talent_points import SetCharacterExtraTalentPointsUseCase
 from app.modules.acore_adapter.application.remote.use_cases.characters.set_level import SetCharacterLevelUseCase
+from app.modules.acore_adapter.application.characters.use_cases.change_name import ChangeCharacterNameUseCase
 
 T = TypeVar("T")
 CHARACTER_USE_CASES_GROUP:dict[str, Type[T]] = {
@@ -14,6 +15,7 @@ CHARACTER_USE_CASES_GROUP:dict[str, Type[T]] = {
     "get_by_character_name":GetCharacterByCharacterNameUseCase,
     "set_extra_talent_points":SetCharacterExtraTalentPointsUseCase,
     "set_level":SetCharacterLevelUseCase,
+    "change_name":ChangeCharacterNameUseCase
 }
 
 __all__ = [

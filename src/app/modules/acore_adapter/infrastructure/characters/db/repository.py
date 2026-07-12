@@ -82,3 +82,18 @@ class CharacterRepository:
         await self.session.flush()
         await self.session.refresh(char)
         return CharacterMapper.map_to_dto(char)
+    
+    async def update(self, char:CharacterDTO) -> CharacterDTO | str:
+        char = await self.get_by_id(char.guid)
+        if char is None:
+            return NotFoundError()
+        stmt = select(CharacterModel).where(CharacterModel.guid == char.guid)
+        result = await self.session.execute(stmt)
+        orm = result.scalar_one_or_none()
+        
+        if orm is None:
+            raise NotFoundError
+        
+        CharacterMapper.update_orm(orm=orm,entity=char)
+        
+                

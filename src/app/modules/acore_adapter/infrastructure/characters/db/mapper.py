@@ -24,5 +24,24 @@ class CharacterMapper:
                 online=data.online,
             )
         return empty_character
-        
+    
+    @staticmethod
+    def map_to_orm(data:CharacterDTO) -> CharacterModel:
+        return CharacterModel(
+            guid=data.guid,
+            name=data.name,
+            level=data.level,
+            money=data.money,
+            account=data.account,
+            extraBonusTalentCount=data.extraBonusTalentCount,
+            online=data.online, 
+        )    
+    
+    @staticmethod
+    def update_orm(orm:CharacterModel, entity:CharacterDTO)-> None:
+        orm.name = entity.name
+        orm.level = entity.level
+        orm.money = entity.money
+        orm.account = entity.account
+        orm.extraBonusTalentCount = entity.extraBonusTalentCount
     

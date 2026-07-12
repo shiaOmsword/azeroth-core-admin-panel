@@ -1,7 +1,7 @@
 import typer
 from app.common.cli.commands.characters.characters_cli import app as characters_app
-from app.common.cli.commands.remote.remote_cli import app as remote_app
-from app.common.cli.commands.remote.characters_cli import app as remote_characters_app
+from app.common.cli.commands.world.remote_cli import app as remote_app
+from app.common.cli.commands.world.characters_cli import app as remote_characters_app
 from app.common.cli.commands.auth.realmlists.realmlist_cli import app as realmlists_app
 
 app = typer.Typer(no_args_is_help=True)

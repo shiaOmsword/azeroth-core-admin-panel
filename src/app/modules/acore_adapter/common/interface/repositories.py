@@ -18,6 +18,9 @@ class CharactersRepositoryProtocol(Protocol):
     async def set_extra_talent(self, guid:int, value:int) -> CharacterDTO:        
         ...
         
+    async def update(self, char:CharacterDTO) -> CharacterDTO | str:        
+        ...
+        
 class RealmlistRepositoryProtocol(Protocol):
     async def list(self, limit: int = 50, offset: int = 0) -> RealmListsDTO:
         ...
