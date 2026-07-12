@@ -12,7 +12,7 @@ empty_character = CharacterDTO(
 
 class CharacterMapper:
     @staticmethod
-    def map_to_dto(data:CharacterModel|None) -> CharacterDTO:
+    def map_to_dto(data:CharacterModel) -> CharacterDTO|None:
         if data:
             return CharacterDTO (
                 guid=data.guid,
@@ -23,7 +23,6 @@ class CharacterMapper:
                 extraBonusTalentCount=data.extraBonusTalentCount,
                 online=data.online,
             )
-        return empty_character
     
     @staticmethod
     def map_to_orm(data:CharacterDTO) -> CharacterModel:

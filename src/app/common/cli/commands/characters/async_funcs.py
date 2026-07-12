@@ -1,39 +1,62 @@
 from collections.abc import Callable
-from typing import TypeVar, Type, Any
+from typing import TypeVar, Type, Any, Protocol
+from punq import Container
 from app.common.bootstrap.use_cases.characters import CHARACTER_USE_CASES_GROUP
 from app.common.bootstrap.di import BuildDi
 from app.common.ui.console import console
 
-T = TypeVar("T")
-class AsyncFuncFactory:
-    def __init__(self, use_case:Type[T]):
-        self.container = BuildDi().build()
-        self.use_case = self.container.resolve(use_case)
+class ExecutableUseCase(Protocol):
+    async def execute(self, *args:Any, **kwargs:Any)->Any:
+        ...
         
-    async def result(self, *args, **kwargs) -> None:
-        response = await self.use_case.execute(*args,**kwargs)
+TUseCase = TypeVar("TUseCase", bound=ExecutableUseCase)
+class AsyncUseCaseRunner:
+    def __init__(self, container: Container) -> None:
+        self._container = container
+    
+    async def run(
+        self,
+        use_case_type:type[TUseCase],
+        *args, 
+        **kwargs
+    ) -> Any:
+        use_case = self._container.resolve(use_case_type)
+        response = await use_case.execute(*args,**kwargs)
         console.print(response)
-        
+        return response
+container = BuildDi().build()
+runner = AsyncUseCaseRunner(container=container)
+
 async def async_list_characters(page:int = 0) -> None:
-    func = AsyncFuncFactory(CHARACTER_USE_CASES_GROUP.get("list"))
-    await func.result(page=page)
-    
+    await runner.run(
+        CHARACTER_USE_CASES_GROUP["list"],
+        page=page
+    )
 async def async_get_character_by_account_id(account_id:int) -> None:
-    func = AsyncFuncFactory(CHARACTER_USE_CASES_GROUP.get("get_by_account_id"))
-    await func.result(account_id=account_id)
-    
+    await runner.run(
+        CHARACTER_USE_CASES_GROUP["get_by_account_id"],
+        account_id=account_id
+        )
 async def async_get_character_by_name(name:str) -> None:
-    func = AsyncFuncFactory(CHARACTER_USE_CASES_GROUP.get("get_by_character_name"))
-    await func.result(name=name)
+    await runner.run(
+        CHARACTER_USE_CASES_GROUP["get_by_character_name"],
+        name=name
+    )
     
 async def set_talents(char_id:int, value:int) -> None:
-    func = AsyncFuncFactory(CHARACTER_USE_CASES_GROUP.get("set_extra_talent_points"))
-    await func.result(char_id=char_id, value=value)
+    await runner.run(
+        CHARACTER_USE_CASES_GROUP["set_extra_talent_points"],
+        char_id=char_id,
+        value=value
+    )
     
 async def change_name(char_id:int, value:str) -> None:
-    func = AsyncFuncFactory(CHARACTER_USE_CASES_GROUP.get("change_name"))
-    await func.result(char_id=char_id, value=value)
-    
+    await runner.run(
+        CHARACTER_USE_CASES_GROUP["change_name"],
+        char_id=char_id,
+        value=value
+    )
+
 ASYNC_FUNCS_CHARACTERS_GROUP = {
     "list":async_list_characters,
     "get_by_account_id":async_get_character_by_account_id,

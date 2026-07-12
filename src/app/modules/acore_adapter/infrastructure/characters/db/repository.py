@@ -42,7 +42,7 @@ class CharacterRepository:
         characters = [CharacterMapper.map_to_dto(model) for model in models]
         return CharactersDTO.from_characters(characters)  
 
-    async def get_by_guid(self, guid: int) -> CharacterDTO:
+    async def get_by_guid(self, guid: int) -> CharacterDTO|None:
         stmt = (
             select(CharacterModel)
             .where(CharacterModel.guid == guid)
