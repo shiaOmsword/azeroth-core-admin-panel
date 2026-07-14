@@ -57,6 +57,12 @@ async def change_name(char_id:int, value:str) -> None:
         char_id=char_id,
         value=value
     )
+    
+async def get_character_inventory(character_id:int) -> None:
+    await runner.run(
+        CHARACTER_USE_CASES_GROUP["inventory_o"],
+        character_id=character_id
+    )
 
 ASYNC_FUNCS_CHARACTERS_GROUP = {
     "list":async_list_characters,
@@ -64,4 +70,5 @@ ASYNC_FUNCS_CHARACTERS_GROUP = {
     "get_by_character_name":async_get_character_by_name,
     "set_extra_talent_points":set_talents,
     "change_name":change_name,
+    "inventory":get_character_inventory,
 }

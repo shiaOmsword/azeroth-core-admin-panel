@@ -3,7 +3,7 @@
 from sqlalchemy import select, update
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.modules.acore_adapter.infrastructure.characters.db.models import CharacterModel
+from app.modules.acore_adapter.infrastructure.characters.db.models.models import CharacterModel
 from app.modules.acore_adapter.domain.characters.entity.character import CharacterDTO, CharactersDTO
 from app.modules.acore_adapter.infrastructure.characters.db.mapper import CharacterMapper
 

@@ -3,7 +3,7 @@ import typer
 from typing import Annotated
 from app.common.bootstrap.di import BuildDi
 from app.common.ui.console import console
-from app.modules.acore_adapter.application.remote.use_cases.characters.set_level import SetCharacterLevelUseCase
+from app.common.bootstrap.use_cases.world import WORLD_USE_CASES_GROUP
 
 app = typer.Typer(name="characters")
 
@@ -14,7 +14,7 @@ def execute_command(
 ) -> None:
     async def runner() -> None:
         container = BuildDi().build()
-        use_case = container.resolve(SetCharacterLevelUseCase)
+        use_case = container.resolve(WORLD_USE_CASES_GROUP["level"])
 
         result = await use_case.execute(character_name=character_name,level=level)
         console.print(result.raw_response)

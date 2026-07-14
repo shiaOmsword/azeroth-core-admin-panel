@@ -1,5 +1,5 @@
 from __future__ import annotations
-from app.modules.acore_adapter.infrastructure.characters.db.models import CharacterModel
+from app.modules.acore_adapter.infrastructure.characters.db.models.models import CharacterModel
 from app.modules.acore_adapter.domain.characters.entity.character import CharacterDTO
 
 class CharacterMapper:
@@ -23,6 +23,7 @@ class CharacterMapper:
                 zone=data.zone,
                 health=data.health,
                 power1=data.power1,
+                equipment_cache=data.equipment_cache,
             )
     
     @staticmethod
@@ -44,6 +45,7 @@ class CharacterMapper:
             zone=data.zone,
             health=data.health,
             power1=data.power1,            
+            equipment_cache=data.equipment_cache,
         )    
     
     @staticmethod
@@ -62,4 +64,4 @@ class CharacterMapper:
         orm.zone = entity.zone
         orm.health = entity.health
         orm.power1 = entity.power1
-    
+        orm.equipment_cache = entity.equipment_cache

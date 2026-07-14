@@ -6,6 +6,9 @@ from app.modules.acore_adapter.application.characters.use_cases.get_by_name impo
 from app.modules.acore_adapter.application.characters.use_cases.set_extra_talent_points import SetCharacterExtraTalentPointsUseCase
 from app.modules.acore_adapter.application.remote.use_cases.characters.set_level import SetCharacterLevelUseCase
 from app.modules.acore_adapter.application.characters.use_cases.change_name import ChangeCharacterNameUseCase
+from app.modules.acore_adapter.application.characters.use_cases.get_character_inventory import GetCharacterInventoryItemsUseCase
+
+from app.modules.acore_adapter.application.orchestrator.use_cases.get_items_name import GetItemNameOrchestrator
 
 T = TypeVar("T")
 CHARACTER_USE_CASES_GROUP:dict[str, Type[T]] = {
@@ -15,7 +18,9 @@ CHARACTER_USE_CASES_GROUP:dict[str, Type[T]] = {
     "get_by_character_name":GetCharacterByCharacterNameUseCase,
     "set_extra_talent_points":SetCharacterExtraTalentPointsUseCase,
     "set_level":SetCharacterLevelUseCase,
-    "change_name":ChangeCharacterNameUseCase
+    "change_name":ChangeCharacterNameUseCase,
+    "inventory": GetCharacterInventoryItemsUseCase,
+    "inventory_o":GetItemNameOrchestrator
 }
 
 __all__ = [

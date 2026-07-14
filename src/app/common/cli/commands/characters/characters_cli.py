@@ -4,6 +4,15 @@ from app.common.cli.commands.characters.async_funcs import ASYNC_FUNCS_CHARACTER
 from .annotations import Page, AccountId, CharacterName, CharacterId, Value, StrValue
 app = typer.Typer(help="Команды для работы с персонажами")
 
+
+@app.command("inventory")
+def execute_command(
+    character_id: AccountId
+) -> None:
+    asyncio.run(ASYNC_FUNCS_CHARACTERS_GROUP["inventory"](
+        character_id=character_id
+    ))
+
 @app.command("list")
 def list_characters(
     page:Page = 0,

@@ -1,13 +1,12 @@
 
-from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker
-
-from app.modules.acore_adapter.infrastructure.characters.db.repository import CharacterRepository
-from app.common.infrastructure.db.providers import CharactersSessionProvider
+from sqlalchemy.ext.asyncio import AsyncSession
+from app.modules.acore_adapter.infrastructure.world.items.db.repositories.item_template_repository import ItemTemplateRepository
+from app.common.infrastructure.db.providers import WorldSessionProvider
 from app.common.errors.base_exceptions import UowActivationError
 
-class CharactersUnitOfWork:
-    def __init__(self, characters_provider: CharactersSessionProvider):
-        self.characters_provider = characters_provider
+class WorldUnitOfWork:
+    def __init__(self, world_provider: WorldSessionProvider):
+        self.world_provider = world_provider
         self.session: AsyncSession | None = None
 
 
@@ -22,8 +21,9 @@ class CharactersUnitOfWork:
         await self.session.rollback()
         
     async def __aenter__(self):
-        self.session = self.characters_provider()
-        self.characters = CharacterRepository(self.session)
+        self.session = self.world_provider()
+
+        self.item_template = ItemTemplateRepository(self.session)
         return self
 
     async def __aexit__(self, exc_type, exc, tb):

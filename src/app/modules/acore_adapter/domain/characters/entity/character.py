@@ -19,6 +19,7 @@ class CharacterDTO:
     power1:int
     extraBonusTalentCount: int = 0
     online: int = 0
+    equipment_cache:str = ""
     
     
 @dataclass

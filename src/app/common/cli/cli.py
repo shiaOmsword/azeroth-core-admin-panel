@@ -3,10 +3,11 @@ from app.common.cli.commands.characters.characters_cli import app as characters_
 from app.common.cli.commands.world.remote_cli import app as remote_app
 from app.common.cli.commands.world.characters_cli import app as remote_characters_app
 from app.common.cli.commands.auth.realmlists.realmlist_cli import app as realmlists_app
-
+from app.common.cli.commands.world.items_cli import app as items_app
 app = typer.Typer(no_args_is_help=True)
 
 app.add_typer(characters_app, name="chars")
 app.add_typer(remote_app, name="remote")
 app.add_typer(remote_characters_app, name="characters")
 app.add_typer(realmlists_app, name="realmlist")
+app.add_typer(items_app, name="items")

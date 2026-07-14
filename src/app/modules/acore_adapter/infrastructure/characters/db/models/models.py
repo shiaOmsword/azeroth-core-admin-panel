@@ -22,3 +22,4 @@ class CharacterModel(Base):
     power1: Mapped[int] = mapped_column(Integer, nullable=False)
     extraBonusTalentCount: Mapped[int] = mapped_column(Integer, nullable=False, default=0)   
     online: Mapped[int] = mapped_column(Integer, nullable=False, default=0)   
+    equipment_cache: Mapped[str] = mapped_column("equipmentCache", String, nullable=False)

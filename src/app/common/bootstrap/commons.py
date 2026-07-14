@@ -11,7 +11,7 @@ from app.common.infrastructure.db.providers import(
     WorldSessionProvider,
 )
 from app.common.infrastructure.db.uow import (
-    UnitsOfWork, CharactersUnitOfWorkFactory, AuthUnitOfWorkFactory
+    UnitsOfWork, CharactersUnitOfWorkFactory, AuthUnitOfWorkFactory, WorldUnitOfWorkFactory
 )
 
 from app.common.protocols.uows import UowsProtocol
@@ -42,6 +42,7 @@ class RegisterCommons:
         
         self.container.register(CharactersUnitOfWorkFactory)
         self.container.register(AuthUnitOfWorkFactory)
+        self.container.register(WorldUnitOfWorkFactory)
         self.container.register(
             UowsProtocol,
             UnitsOfWork,
