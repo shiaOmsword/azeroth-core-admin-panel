@@ -2,6 +2,7 @@
 
 from sqlalchemy import MetaData
 from sqlalchemy.orm import DeclarativeBase
+import app.modules.acore_adapter.infrastructure.characters.db.models
 
 
 NAMING_CONVENTION = {

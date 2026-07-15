@@ -1,16 +1,6 @@
 from dataclasses import dataclass
-
-@dataclass
-class CharacterInventoryItem:
-    guid:int #character_id
-    bag:int
-    slot:int
-    item:int #item_instance_id, not template id
-    
-@dataclass
-class CharacterInventoryItems:
-    items:list[CharacterInventoryItem]
-    
+from app.modules.acore_adapter.domain.acore_characters.entity.character_inventory import CharacterInventoryItem, CharacterInventoryItems
+"""for compatiblity with old classes"""
 
 @dataclass
 class ItemTemplateLocale:

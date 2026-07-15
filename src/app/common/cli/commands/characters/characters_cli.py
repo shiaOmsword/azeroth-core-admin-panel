@@ -1,7 +1,7 @@
 import typer
 import asyncio
 from app.common.cli.commands.characters.async_funcs import ASYNC_FUNCS_CHARACTERS_GROUP
-from .annotations import Page, AccountId, CharacterName, CharacterId, Value, StrValue
+from .annotations import Page, AccountId, CharacterName, CharacterId, Value, StrValue, ItemInstanceId
 app = typer.Typer(help="Команды для работы с персонажами")
 
 
@@ -12,6 +12,23 @@ def execute_command(
     asyncio.run(ASYNC_FUNCS_CHARACTERS_GROUP["inventory"](
         character_id=character_id
     ))
+    
+@app.command("raw-inventory")
+def execute_command(
+    character_id: AccountId
+) -> None:
+    asyncio.run(ASYNC_FUNCS_CHARACTERS_GROUP["character_inventory"](
+        character_id=character_id
+    ))    
+    
+    
+@app.command("update-item")
+def execute_command(
+    item_instance_id: ItemInstanceId
+) -> None:
+    asyncio.run(ASYNC_FUNCS_CHARACTERS_GROUP["update_item"](
+        item_instance_id=item_instance_id
+    ))        
 
 @app.command("list")
 def list_characters(

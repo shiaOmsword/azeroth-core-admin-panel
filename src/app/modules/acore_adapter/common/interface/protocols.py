@@ -4,7 +4,7 @@ from types import TracebackType
 from .repositories import CharactersRepositoryProtocol, RealmlistRepositoryProtocol
 from app.modules.acore_adapter.infrastructure.characters.db.repositories.item_inventory_repository import ItemInventoryRepositoryProtocol
 from app.modules.acore_adapter.infrastructure.world.items.db.repositories.item_template_repository import ItemTemplateRepositoryProtocol
-
+from app.modules.acore_adapter.infrastructure.characters.db.repositories.item_instance_repository import ItemInstanceRepositoryProtocol
 class WorldUnitOfWorkProtocol(Protocol):
     item_template: ItemTemplateRepositoryProtocol
     async def commit(self) -> None:
@@ -46,6 +46,7 @@ class AuthUnitOfWorkProtocol(Protocol):
 class CharactersUnitOfWorkProtocol(Protocol):
     characters: CharactersRepositoryProtocol
     character_inventory:ItemInventoryRepositoryProtocol
+    item_instance:ItemInstanceRepositoryProtocol
 
     async def commit(self) -> None:
         ...

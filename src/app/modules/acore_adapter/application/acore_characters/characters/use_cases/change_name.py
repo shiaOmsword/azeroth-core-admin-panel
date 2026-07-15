@@ -1,8 +1,8 @@
 
 from app.common.protocols.uows import UowsProtocol
 from app.modules.acore_adapter.infrastructure.characters.db.dto import CharacterDTO
-from app.modules.acore_adapter.application.characters.dto import CharacterReadDTO
-from app.modules.acore_adapter.domain.characters.exceptions.errors import CharacterIsOnlineError, CharacterNotFoundError
+from app.modules.acore_adapter.application.acore_characters.characters.dto import CharacterReadDTO
+from app.modules.acore_adapter.domain.acore_characters.exceptions.errors import CharacterIsOnlineError, CharacterNotFoundError
 import logging
 logger = logging.getLogger(__name__)
 

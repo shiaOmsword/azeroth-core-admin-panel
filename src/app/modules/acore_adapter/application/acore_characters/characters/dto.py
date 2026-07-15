@@ -1,11 +1,10 @@
 from typing import Any
 from dataclasses import dataclass
-from app.modules.acore_adapter.domain.characters.entity.character import CharacterDTO
+from app.modules.acore_adapter.domain.acore_characters.entity.character import CharacterDTO
 from app.modules.acore_adapter.common.constants.gender import get_character_gender_name
 from app.modules.acore_adapter.common.constants.races import get_character_race_name
 from app.modules.acore_adapter.common.constants.classes import get_character_classes_name
 from app.modules.acore_adapter.common.utils.format import format_money
-from app.modules.acore_adapter.application.characters.services.get_items_from_cache import unpack_item_values
 from typing import Literal
 
 @dataclass
@@ -30,7 +29,7 @@ class CharacterReadDTO:
     
     
     @classmethod
-    def map_to_read_dto(cls, data:CharacterDTO):
+    def map_to_read_dto(cls, data:CharacterDTO, inventory:Any | None = None):
         if data:
             return CharacterReadDTO (
                 guid=data.guid,
@@ -49,5 +48,5 @@ class CharacterReadDTO:
                 zone=data.zone,
                 health=data.health,
                 power1=data.power1,
-                items={"items_id":unpack_item_values(data.equipment_cache)}
+                items=[item for item in inventory],
             )

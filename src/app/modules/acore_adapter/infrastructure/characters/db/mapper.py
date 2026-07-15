@@ -1,6 +1,6 @@
 from __future__ import annotations
-from app.modules.acore_adapter.infrastructure.characters.db.models.models import CharacterModel
-from app.modules.acore_adapter.domain.characters.entity.character import CharacterDTO
+from app.modules.acore_adapter.infrastructure.characters.db.models.character_model import CharacterModel
+from app.modules.acore_adapter.domain.acore_characters.entity.character import CharacterDTO
 
 class CharacterMapper:
     @staticmethod

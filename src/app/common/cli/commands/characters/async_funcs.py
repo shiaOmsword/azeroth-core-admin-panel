@@ -4,7 +4,7 @@ from punq import Container
 from app.common.bootstrap.use_cases.characters import CHARACTER_USE_CASES_GROUP
 from app.common.bootstrap.di import BuildDi
 from app.common.ui.console import console
-from app.modules.acore_adapter.application.characters.dto import CharacterReadDTO
+from app.modules.acore_adapter.application.acore_characters.characters.dto import CharacterReadDTO
 
 class ExecutableUseCase(Protocol):
     async def execute(self, *args:Any, **kwargs:Any)->Any:
@@ -58,6 +58,19 @@ async def change_name(char_id:int, value:str) -> None:
         value=value
     )
     
+async def get_raw_character_inventory(character_id:int) -> None:
+    await runner.run(
+        CHARACTER_USE_CASES_GROUP["character_inventory"],
+        character_id=character_id
+    )
+    
+    
+async def update_instance_item(item_instance_id:int) -> None:
+    await runner.run(
+        CHARACTER_USE_CASES_GROUP["update_item"],
+        item_instance_id=item_instance_id
+    )    
+        
 async def get_character_inventory(character_id:int) -> None:
     await runner.run(
         CHARACTER_USE_CASES_GROUP["inventory_o"],
@@ -71,4 +84,6 @@ ASYNC_FUNCS_CHARACTERS_GROUP = {
     "set_extra_talent_points":set_talents,
     "change_name":change_name,
     "inventory":get_character_inventory,
+    "character_inventory":get_raw_character_inventory,
+    "update_item":update_instance_item,
 }

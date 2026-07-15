@@ -5,7 +5,7 @@ from app.modules.acore_adapter.common.interface.gateways import (
 from app.modules.acore_adapter.infrastructure.remote.dto import (
     WorldCommandResult,
 )
-from app.modules.acore_adapter.domain.characters.exceptions.errors import CharacterLevelRequiredError, CharacterNameEmptyError
+from app.modules.acore_adapter.domain.acore_characters.exceptions.errors import CharacterLevelRequiredError, CharacterNameEmptyError
 
 class SetCharacterLevelUseCase:
     def __init__(

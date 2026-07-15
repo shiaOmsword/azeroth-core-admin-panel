@@ -3,6 +3,7 @@ from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker
 
 from app.modules.acore_adapter.infrastructure.characters.db.repositories.repository import CharacterRepository
 from app.modules.acore_adapter.infrastructure.characters.db.repositories.item_inventory_repository import ItemInventoryRepository
+from app.modules.acore_adapter.infrastructure.characters.db.repositories.item_instance_repository import ItemInstanceRepository
 from app.common.infrastructure.db.providers import CharactersSessionProvider
 from app.common.errors.base_exceptions import UowActivationError
 
@@ -26,6 +27,8 @@ class CharactersUnitOfWork:
         self.session = self.characters_provider()
         self.characters = CharacterRepository(self.session)
         self.character_inventory = ItemInventoryRepository(self.session)
+        self.item_instance=ItemInstanceRepository(self.session)
+        
         return self
 
     async def __aexit__(self, exc_type, exc, tb):
