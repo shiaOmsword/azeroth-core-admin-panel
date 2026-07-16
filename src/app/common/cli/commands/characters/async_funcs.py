@@ -47,7 +47,7 @@ async def async_get_character_by_name(name:str) -> None:
 async def set_talents(char_id:int, value:int) -> None:
     await runner.run(
         CHARACTER_USE_CASES_GROUP["set_extra_talent_points"],
-        char_id=char_id,
+        character_id=char_id,
         value=value
     )
     

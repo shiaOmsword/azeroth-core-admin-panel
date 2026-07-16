@@ -30,6 +30,12 @@ class CharacterReadDTO:
     
     @classmethod
     def map_to_read_dto(cls, data:CharacterDTO, inventory:Any | None = None):
+        
+        mock_items =["None"]
+        if not inventory:
+            items = mock_items
+        else:
+            items = [item for item in inventory]
         if data:
             return CharacterReadDTO (
                 guid=data.guid,
@@ -48,5 +54,5 @@ class CharacterReadDTO:
                 zone=data.zone,
                 health=data.health,
                 power1=data.power1,
-                items=[item for item in inventory],
+                items=items,
             )

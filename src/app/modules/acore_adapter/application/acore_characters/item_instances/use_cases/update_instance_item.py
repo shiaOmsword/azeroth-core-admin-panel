@@ -24,10 +24,13 @@ class UpdateInventoryItemUseCase:
             if item is None:
                 logger.error(NotFoundError.message)
                 return None
-            return item
+            
             parsed = ItemEnchantments.from_string(item.enchantments)
-            parsed.set_custom(EnchantmentSlot.PROPERTY_1, 1605)
-            parsed.set_custom(EnchantmentSlot.PROPERTY_2, 1107)
+            parsed.set_custom(EnchantmentSlot.PROPERTY_1, 3833) #attack power
+            parsed.set_custom(EnchantmentSlot.PROPERTY_2, 1107) #agility
+            parsed.set_custom(EnchantmentSlot.PROPERTY_3, 1074) #stamina
+            parsed.set_custom(EnchantmentSlot.PROPERTY_4, 198) #crit
+            
             new_string = parsed.serialize()
             
             console.print(new_string)
