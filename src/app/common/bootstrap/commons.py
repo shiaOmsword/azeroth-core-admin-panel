@@ -1,4 +1,5 @@
 import punq
+from pathlib import Path
 from app.config.settings import settings, Settings
 from app.common.infrastructure.db.session import (
     auth_session_factory,
@@ -18,6 +19,8 @@ from app.common.protocols.uows import UowsProtocol
 
 from app.modules.acore_adapter.infrastructure.remote.factory import build_acore_soap_client
 from app.modules.acore_adapter.common.interface.gateways import WorldCommandGateway
+from app.modules.acore_adapter.infrastructure.characters.enchantments.json_enchantment_catalog import JsonEnchantmentCatalog
+from app.modules.acore_adapter.application.acore_characters.item_instances.ports.enchantment_catalog import EnchantmentCatalog
 class RegisterCommons:
     def __init__(self, container: punq.Container):
         self.container = container
@@ -50,3 +53,8 @@ class RegisterCommons:
         
         soap_client = build_acore_soap_client()
         self.container.register(WorldCommandGateway, instance=soap_client)
+        
+        self.container.register(
+            EnchantmentCatalog,
+            instance=JsonEnchantmentCatalog(Path(settings.json_enchants_catalog)),
+        )        

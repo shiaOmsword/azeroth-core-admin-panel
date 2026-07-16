@@ -13,9 +13,9 @@ class CharacterReadDTO:
     account:int
     name:str
     level:int
-    money:int
+    money:str
     race:str
-    character_class:int
+    character_class:str
     gender:str
     xp:int
     skin:int
@@ -23,7 +23,7 @@ class CharacterReadDTO:
     zone:int
     health:int
     power1:int
-    items:dict
+    items:list
     extraBonusTalentCount: int = 0
     online: int = 0
     
@@ -36,8 +36,8 @@ class CharacterReadDTO:
             items = mock_items
         else:
             items = [item for item in inventory]
-        if data:
-            return CharacterReadDTO (
+            
+        return CharacterReadDTO (
                 guid=data.guid,
                 name=data.name,
                 level=data.level,
@@ -55,4 +55,4 @@ class CharacterReadDTO:
                 health=data.health,
                 power1=data.power1,
                 items=items,
-            )
+        )

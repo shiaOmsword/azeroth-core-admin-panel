@@ -65,11 +65,31 @@ async def get_raw_character_inventory(character_id:int) -> None:
     )
     
     
-async def update_instance_item(item_instance_id:int) -> None:
+async def get_item_enchantments(item_instance_id: int) -> None:
     await runner.run(
-        CHARACTER_USE_CASES_GROUP["update_item"],
-        item_instance_id=item_instance_id
-    )    
+        CHARACTER_USE_CASES_GROUP["item_enchantments"],
+        item_instance_id=item_instance_id,
+    )
+
+
+async def apply_item_enchantment(
+    item_instance_id: int,
+    enchantment_id: int,
+    slot: int | None = None,
+    overwrite: bool = False,
+    dry_run: bool = False,
+) -> None:
+    from app.modules.acore_adapter.domain.acore_characters.item_instances.enchantments import EnchantmentSlot
+
+    parsed_slot = EnchantmentSlot(slot) if slot is not None else None
+    await runner.run(
+        CHARACTER_USE_CASES_GROUP["apply_item_enchantment"],
+        item_instance_id=item_instance_id,
+        enchantment_id=enchantment_id,
+        slot=parsed_slot,
+        overwrite=overwrite,
+        dry_run=dry_run,
+    )
         
 async def get_character_inventory(character_id:int) -> None:
     await runner.run(
@@ -85,5 +105,6 @@ ASYNC_FUNCS_CHARACTERS_GROUP = {
     "change_name":change_name,
     "inventory":get_character_inventory,
     "character_inventory":get_raw_character_inventory,
-    "update_item":update_instance_item,
+    "item_enchantments": get_item_enchantments,
+    "apply_item_enchantment": apply_item_enchantment,
 }

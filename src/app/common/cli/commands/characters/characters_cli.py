@@ -1,7 +1,10 @@
 import typer
 import asyncio
 from app.common.cli.commands.characters.async_funcs import ASYNC_FUNCS_CHARACTERS_GROUP
-from .annotations import Page, AccountId, CharacterName, CharacterId, Value, StrValue, ItemInstanceId
+from .annotations import (
+    Page, AccountId, CharacterName, CharacterId, Value, StrValue,
+    ItemInstanceId, EnchantmentId, EnchantmentSlotOption, Overwrite, DryRun,
+)
 app = typer.Typer(help="Команды для работы с персонажами")
 
 
@@ -22,13 +25,30 @@ def execute_command(
     ))    
     
     
-@app.command("update-item")
-def execute_command(
-    item_instance_id: ItemInstanceId
+@app.command("item-enchants")
+def item_enchants(
+    item_instance_id: ItemInstanceId,
 ) -> None:
-    asyncio.run(ASYNC_FUNCS_CHARACTERS_GROUP["update_item"](
-        item_instance_id=item_instance_id
-    ))        
+    asyncio.run(ASYNC_FUNCS_CHARACTERS_GROUP["item_enchantments"](
+        item_instance_id=item_instance_id,
+    ))
+
+
+@app.command("enchant-item")
+def enchant_item(
+    item_instance_id: ItemInstanceId,
+    enchantment_id: EnchantmentId,
+    slot: EnchantmentSlotOption = None,
+    overwrite: Overwrite = False,
+    dry_run: DryRun = False,
+) -> None:
+    asyncio.run(ASYNC_FUNCS_CHARACTERS_GROUP["apply_item_enchantment"](
+        item_instance_id=item_instance_id,
+        enchantment_id=enchantment_id,
+        slot=slot,
+        overwrite=overwrite,
+        dry_run=dry_run,
+    ))
 
 @app.command("list")
 def list_characters(

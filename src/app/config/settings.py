@@ -57,6 +57,8 @@ class Settings(BaseSettings):
         default=10.0,
         alias="ACORE_SOAP_TIMEOUT"
     )
+    
+    json_enchants_catalog: str = Field(default=f"{BASE_DIR}/src/app/scripts/spell_item_enchantments.json")
         
     model_config = SettingsConfigDict (
         env_file=f"{ENV_FILE}",

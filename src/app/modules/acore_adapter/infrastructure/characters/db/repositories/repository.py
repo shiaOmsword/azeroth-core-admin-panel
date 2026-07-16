@@ -50,6 +50,8 @@ class CharacterRepository:
 
         result = await self.session.execute(stmt)
         model = result.scalar_one_or_none()
+        if model is None:
+            return None
         return CharacterMapper.map_to_dto(model)
 
     async def get_by_name(self, name: str) -> CharacterDTO | None:
