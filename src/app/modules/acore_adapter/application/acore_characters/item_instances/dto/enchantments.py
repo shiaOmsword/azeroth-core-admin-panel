@@ -57,3 +57,25 @@ class ApplyItemEnchantmentsResult:
     applied: tuple[AppliedEnchantment, ...]
     serialized: str
     persisted: bool
+
+@dataclass(frozen=True, slots=True)
+class ItemEnchantmentsUpdate:
+    item_instance_id: int
+    enchantments: str
+
+
+@dataclass(frozen=True, slots=True)
+class AutoEnchantItemPlan:
+    """Calculated enchantment changes for one equipped item."""
+
+    item_instance_id: int
+    item_template_id: int
+    equipment_slot: int
+    old_enchantments: str
+    new_enchantments: str
+    applied: tuple[AppliedEnchantment, ...]
+    skipped_enchantment_ids: tuple[int, ...]
+
+    @property
+    def changed(self) -> bool:
+        return self.old_enchantments != self.new_enchantments

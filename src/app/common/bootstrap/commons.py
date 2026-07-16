@@ -23,6 +23,9 @@ from app.modules.acore_adapter.infrastructure.characters.enchantments.json_encha
 from app.modules.acore_adapter.application.acore_characters.item_instances.ports.enchantment_catalog import EnchantmentCatalog
 from app.modules.acore_adapter.infrastructure.characters.enchantments.yaml_enchants_sets_reader import YamlSetsReader
 from app.modules.acore_adapter.common.interface.repositories import SetsReader
+from app.modules.acore_adapter.application.acore_characters.item_instances.services.item_enchantments_planner import (
+    ItemEnchantmentsPlanner,
+)
 class RegisterCommons:
     def __init__(self, container: punq.Container):
         self.container = container
@@ -65,3 +68,7 @@ class RegisterCommons:
             SetsReader,
             instance=YamlSetsReader(settings.enchantments_set_catalog),
         )  
+        self.container.register(
+            ItemEnchantmentsPlanner,
+            ItemEnchantmentsPlanner,
+        )

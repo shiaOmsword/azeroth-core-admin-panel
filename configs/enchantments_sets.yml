@@ -1,14 +1,15 @@
 sets:
   rogue:
-    - 12345 #agility
-    - 12345 #attack_power
+    - 3531 #attack_speed? strength
+    - 1107 #agility
+    - 3012 #attack_power
     - 198 #crit_chance
-    - 1107 #stamina
-    - 12345 #attack_speed? strength
-
+    - 1078 #stamina
+    
   mage:
-    - 5412345 #intellect
-    - 5412345 #spellpower
-    - 5412345 #spirit
-    - 5412345 #crit_spell?
-    - 5412345 #mana_regen? stamina?
+    - 3531 #haste
+    - 2340 #spellpower
+    - 1139 #intellect
+    - 2523 #hit rating
+    - 198 #crit_spell?
+    

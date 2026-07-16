@@ -39,3 +39,15 @@ class NativeRandomPropertyConflictError(EnchantmentError):
 
 class CharacterOnlineError(EnchantmentError):
     pass
+
+
+class EnchantSetNotFoundError(EnchantmentError):
+    pass
+
+
+class EnchantSetConfigurationError(EnchantmentError):
+    pass
+
+
+class UnsupportedCharacterClassError(EnchantmentError):
+    pass

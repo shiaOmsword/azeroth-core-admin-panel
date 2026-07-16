@@ -131,13 +131,11 @@ async def get_character_inventory(character_id: int) -> None:
     )
     
 async def auto_apply_enchants(
-    character_class:str,
-    character_id:int,
-    dry_run:bool = False,
+    character_id: int,
+    dry_run: bool = False,
 ) -> None:
     await runner.run(
         CHARACTER_USE_CASES_GROUP["auto_enchants"],
-        character_class=character_class,
         character_id=character_id,
         dry_run=dry_run,
     )
