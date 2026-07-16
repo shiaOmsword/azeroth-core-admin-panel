@@ -18,11 +18,11 @@ class EnchantmentSlotOccupiedError(EnchantmentError):
     pass
 
 
-class ReservedEnchantmentSlotError(EnchantmentError):
+class DuplicateEnchantmentSlotError(EnchantmentError):
     pass
 
 
-class NoFreeEnchantmentSlotError(EnchantmentError):
+class ReservedEnchantmentSlotError(EnchantmentError):
     pass
 
 class NoFreeCustomEnchantmentSlotError(EnchantmentError):

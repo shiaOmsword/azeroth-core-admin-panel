@@ -26,10 +26,21 @@ DryRun = Annotated[
 ]
 
 Enchantments = Annotated[
-    list[int],
+    list[int] | None,
     typer.Option(
         "--enchant",
         "-e",
-        help="Enchantment ID. May be specified multiple times.",
+        help="Enchantment ID. Repeat the option to fill the next free custom slots.",
+    ),
+]
+
+EnchantmentSets = Annotated[
+    list[str] | None,
+    typer.Option(
+        "--set",
+        help=(
+            "Explicit SLOT:ENCHANTMENT_ID pair. Repeat the option to target "
+            "several slots, for example --set 9:1107 --set 10:1074."
+        ),
     ),
 ]

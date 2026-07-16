@@ -1,9 +1,14 @@
 import typer
 import asyncio
 from app.common.cli.commands.characters.async_funcs import ASYNC_FUNCS_CHARACTERS_GROUP
+from app.common.cli.commands.characters.enchantment_input import (
+    EnchantmentSetParseError,
+    build_enchantment_changes,
+)
 from .annotations import (
     Page, AccountId, CharacterName, CharacterId, Value, StrValue,
     ItemInstanceId, EnchantmentId, EnchantmentSlotOption, Overwrite, DryRun,
+    Enchantments, EnchantmentSets,
 )
 app = typer.Typer(help="Команды для работы с персонажами")
 
@@ -47,6 +52,39 @@ def enchant_item(
         enchantment_id=enchantment_id,
         slot=slot,
         overwrite=overwrite,
+        dry_run=dry_run,
+    ))
+
+
+@app.command("enchant-item-batch")
+def enchant_item_batch(
+    item_instance_id: ItemInstanceId,
+    enchantment_ids: Enchantments = None,
+    sets: EnchantmentSets = None,
+    overwrite: Overwrite = False,
+    dry_run: DryRun = False,
+) -> None:
+    try:
+        changes = build_enchantment_changes(
+            enchantment_ids=enchantment_ids or (),
+            set_values=sets or (),
+            overwrite=overwrite,
+        )
+    except EnchantmentSetParseError as error:
+        raise typer.BadParameter(
+            str(error),
+            param_hint="--set/--enchant",
+        ) from error
+
+    if not changes:
+        raise typer.BadParameter(
+            "Provide at least one --enchant or --set option",
+            param_hint="--enchant/--set",
+        )
+
+    asyncio.run(ASYNC_FUNCS_CHARACTERS_GROUP["apply_item_enchantments"](
+        item_instance_id=item_instance_id,
+        changes=changes,
         dry_run=dry_run,
     ))
 
