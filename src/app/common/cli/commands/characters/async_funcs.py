@@ -129,6 +129,18 @@ async def get_character_inventory(character_id: int) -> None:
         CHARACTER_USE_CASES_GROUP["inventory_o"],
         character_id=character_id,
     )
+    
+async def auto_apply_enchants(
+    character_class:str,
+    character_id:int,
+    dry_run:bool = False,
+) -> None:
+    await runner.run(
+        CHARACTER_USE_CASES_GROUP["auto_enchants"],
+        character_class=character_class,
+        character_id=character_id,
+        dry_run=dry_run,
+    )
 
 
 ASYNC_FUNCS_CHARACTERS_GROUP = {
@@ -142,4 +154,5 @@ ASYNC_FUNCS_CHARACTERS_GROUP = {
     "item_enchantments": get_item_enchantments,
     "apply_item_enchantment": apply_item_enchantment,
     "apply_item_enchantments": apply_item_enchantments,
+    "auto_apply_enchants":auto_apply_enchants,
 }

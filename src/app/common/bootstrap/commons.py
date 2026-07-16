@@ -21,6 +21,8 @@ from app.modules.acore_adapter.infrastructure.remote.factory import build_acore_
 from app.modules.acore_adapter.common.interface.gateways import WorldCommandGateway
 from app.modules.acore_adapter.infrastructure.characters.enchantments.json_enchantment_catalog import JsonEnchantmentCatalog
 from app.modules.acore_adapter.application.acore_characters.item_instances.ports.enchantment_catalog import EnchantmentCatalog
+from app.modules.acore_adapter.infrastructure.characters.enchantments.yaml_enchants_sets_reader import YamlSetsReader
+from app.modules.acore_adapter.common.interface.repositories import SetsReader
 class RegisterCommons:
     def __init__(self, container: punq.Container):
         self.container = container
@@ -58,3 +60,8 @@ class RegisterCommons:
             EnchantmentCatalog,
             instance=JsonEnchantmentCatalog(Path(settings.json_enchants_catalog)),
         )        
+        
+        self.container.register(
+            SetsReader,
+            instance=YamlSetsReader(settings.enchantments_set_catalog),
+        )  

@@ -59,6 +59,7 @@ class Settings(BaseSettings):
     )
     
     json_enchants_catalog: str = Field(default=f"{BASE_DIR}/src/app/scripts/spell_item_enchantments.json")
+    enchantments_set_catalog: Path = Field(default=BASE_DIR / "configs" / "enchantments_sets.yml")
         
     model_config = SettingsConfigDict (
         env_file=f"{ENV_FILE}",

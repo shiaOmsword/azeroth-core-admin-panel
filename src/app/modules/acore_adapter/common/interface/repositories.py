@@ -2,6 +2,9 @@ from typing import Protocol
 from app.modules.acore_adapter.infrastructure.characters.db.dto import CharacterDTO, CharactersDTO
 from app.modules.acore_adapter.infrastructure.auth.realmlist.db.dto import RealmListDTO, RealmListsDTO
 
+class SetsReader(Protocol):
+    def get_enchant_set(self, character_class:str) -> list[int]:
+        ...
 
 class CharactersRepositoryProtocol(Protocol):
     async def list(self, limit: int = 50, offset: int = 0) -> CharactersDTO:

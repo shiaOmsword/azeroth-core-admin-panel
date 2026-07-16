@@ -12,6 +12,7 @@ from app.modules.acore_adapter.application.acore_characters.item_instances.use_c
 from app.modules.acore_adapter.application.acore_characters.item_instances.use_cases.apply_item_enchantment import ApplyItemEnchantmentUseCase
 from app.modules.acore_adapter.application.acore_characters.item_instances.use_cases.apply_item_enchantments import ApplyItemEnchantmentsUseCase
 from app.modules.acore_adapter.application.orchestrator.use_cases.get_items_name import GetItemNameOrchestrator
+from app.modules.acore_adapter.application.orchestrator.use_cases.auto_enchanter import AutoEnchantCharacterItemsByClassUseCase
 
 class ExecutableUseCase(Protocol):
     async def execute(self, *args: Any, **kwargs: Any) -> Any:
@@ -32,6 +33,7 @@ CHARACTER_USE_CASES_GROUP:dict[str, type[ExecutableUseCase]] = {
     "item_enchantments": GetItemEnchantmentsUseCase,
     "apply_item_enchantment": ApplyItemEnchantmentUseCase,
     "apply_item_enchantments": ApplyItemEnchantmentsUseCase,
+    "auto_enchants": AutoEnchantCharacterItemsByClassUseCase,
 }
 
 __all__ = [

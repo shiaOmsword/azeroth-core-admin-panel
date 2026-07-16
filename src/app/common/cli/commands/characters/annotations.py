@@ -5,6 +5,7 @@ Page = Annotated[int, "--page", typer.Option(help="Номер страницы �
 AccountId = Annotated[int, "--id", typer.Argument(help="ID аккуанта пользователя")]
 CharacterName = Annotated[str, "--name", typer.Argument(help="Имя персонажа")]
 CharacterId = Annotated[int, "--id", typer.Argument(help="guid character")]
+CharacterClass = Annotated[str, "-class", typer.Argument(help="класс персонажа rogue, mage, etc")]
 Value = Annotated[int, "--value", typer.Argument(help="how many talents")]
 StrValue = Annotated[str, "--value", typer.Argument(help="string value")]
 ItemInstanceId = Annotated[int, "--instance-id", typer.Argument(help="Instance item guid")]
