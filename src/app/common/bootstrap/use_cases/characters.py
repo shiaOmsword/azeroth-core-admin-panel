@@ -10,7 +10,7 @@ from app.modules.acore_adapter.application.acore_characters.characters.use_cases
 from app.modules.acore_adapter.application.acore_characters.characters.use_cases.get_character_inventory import GetCharacterInventoryItemsUseCase
 from app.modules.acore_adapter.application.acore_characters.item_instances.use_cases.get_item_enchantments import GetItemEnchantmentsUseCase
 from app.modules.acore_adapter.application.acore_characters.item_instances.use_cases.apply_item_enchantment import ApplyItemEnchantmentUseCase
-
+from app.modules.acore_adapter.application.acore_characters.item_instances.use_cases.apply_item_enchantments import ApplyItemEnchantmentsUseCase
 from app.modules.acore_adapter.application.orchestrator.use_cases.get_items_name import GetItemNameOrchestrator
 
 class ExecutableUseCase(Protocol):
@@ -31,6 +31,7 @@ CHARACTER_USE_CASES_GROUP:dict[str, type[ExecutableUseCase]] = {
     "inventory_o":GetItemNameOrchestrator,
     "item_enchantments": GetItemEnchantmentsUseCase,
     "apply_item_enchantment": ApplyItemEnchantmentUseCase,
+    "apply_item_enchantments": ApplyItemEnchantmentsUseCase,
 }
 
 __all__ = [

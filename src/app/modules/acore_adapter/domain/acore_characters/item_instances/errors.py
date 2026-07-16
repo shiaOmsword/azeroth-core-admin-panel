@@ -22,6 +22,9 @@ class ReservedEnchantmentSlotError(EnchantmentError):
     pass
 
 
+class NoFreeEnchantmentSlotError(EnchantmentError):
+    pass
+
 class NoFreeCustomEnchantmentSlotError(EnchantmentError):
     pass
 

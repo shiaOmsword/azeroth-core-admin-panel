@@ -90,6 +90,25 @@ async def apply_item_enchantment(
         overwrite=overwrite,
         dry_run=dry_run,
     )
+    
+async def apply_item_enchantments(
+    item_instance_id: int,
+    changes: int,
+    slot: int | None = None,
+    overwrite: bool = False,
+    dry_run: bool = False,
+) -> None:
+    from app.modules.acore_adapter.domain.acore_characters.item_instances.enchantments import EnchantmentSlot
+
+    parsed_slot = EnchantmentSlot(slot) if slot is not None else None
+    await runner.run(
+        CHARACTER_USE_CASES_GROUP["apply_item_enchantment"],
+        item_instance_id=item_instance_id,
+        enchantment_id=enchantment_id,
+        slot=parsed_slot,
+        overwrite=overwrite,
+        dry_run=dry_run,
+    )    
         
 async def get_character_inventory(character_id:int) -> None:
     await runner.run(

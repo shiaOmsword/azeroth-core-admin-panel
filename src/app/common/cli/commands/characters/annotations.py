@@ -24,3 +24,12 @@ DryRun = Annotated[
     bool,
     typer.Option("--dry-run", help="Calculate the change without writing to the database"),
 ]
+
+Enchantments = Annotated[
+    list[int],
+    typer.Option(
+        "--enchant",
+        "-e",
+        help="Enchantment ID. May be specified multiple times.",
+    ),
+]

@@ -3,8 +3,15 @@ from dataclasses import dataclass
 from app.modules.acore_adapter.domain.acore_characters.item_instances.enchantments import (
     EnchantmentSlot,
     EnchantmentValue,
+    EnchantmentDefinition
 )
 
+@dataclass(frozen=True, slots=True)
+class EnchantmentChange:
+    enchantment_id: int
+    slot: EnchantmentSlot | None = None
+    overwrite: bool = False
+    
 
 @dataclass(frozen=True, slots=True)
 class ItemEnchantmentInfo:
@@ -32,5 +39,21 @@ class ApplyItemEnchantmentResult:
     effect_summary: str
     previous_value: EnchantmentValue
     current_value: EnchantmentValue
+    serialized: str
+    persisted: bool
+
+
+@dataclass(frozen=True, slots=True)
+class AppliedEnchantment:
+    slot: EnchantmentSlot
+    previous_value: EnchantmentValue
+    current_value: EnchantmentValue
+    enchantment: EnchantmentDefinition
+
+
+@dataclass(frozen=True, slots=True)
+class ApplyItemEnchantmentsResult:
+    item_guid: int
+    applied: tuple[AppliedEnchantment, ...]
     serialized: str
     persisted: bool
