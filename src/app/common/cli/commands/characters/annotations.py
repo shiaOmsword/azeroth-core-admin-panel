@@ -21,6 +21,16 @@ Overwrite = Annotated[
     bool,
     typer.Option("--overwrite", help="Allow replacing an occupied custom slot"),
 ]
+AutoEnchantOverwrite = Annotated[
+    bool,
+    typer.Option(
+        "--overwrite",
+        help=(
+            "Clear and replace item property slots 7 to 11 before applying "
+            "the configured enchantment set"
+        ),
+    ),
+]
 DryRun = Annotated[
     bool,
     typer.Option("--dry-run", help="Calculate the change without writing to the database"),

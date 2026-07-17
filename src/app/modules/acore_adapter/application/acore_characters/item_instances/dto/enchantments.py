@@ -74,6 +74,7 @@ class AutoEnchantItemPlan:
     old_enchantments: str
     new_enchantments: str
     applied: tuple[AppliedEnchantment, ...]
+    cleared_slots: tuple[EnchantmentSlot, ...]
     skipped_enchantment_ids: tuple[int, ...]
 
     @property

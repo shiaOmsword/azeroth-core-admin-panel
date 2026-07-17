@@ -1,4 +1,4 @@
-from collections.abc import Iterator
+from collections.abc import Iterable, Iterator
 from dataclasses import dataclass
 from enum import IntEnum
 
@@ -117,6 +117,22 @@ class ItemEnchantments:
             duration=0,
             charges=0,
         )
+
+    def clear_custom(self, slot: EnchantmentSlot) -> None:
+        if slot not in self.CUSTOM_SLOTS:
+            raise ReservedEnchantmentSlotError(
+                f"Slot {slot.name} is reserved by AzerothCore"
+            )
+
+        self._values[slot.value] = EnchantmentValue()
+
+    def clear_custom_slots(
+        self,
+        slots: Iterable[EnchantmentSlot] | None = None,
+    ) -> None:
+        target_slots = self.CUSTOM_SLOTS if slots is None else slots
+        for slot in target_slots:
+            self.clear_custom(slot)
 
     def first_free_custom_slot(self) -> EnchantmentSlot | None:
         for slot in self.CUSTOM_SLOTS:

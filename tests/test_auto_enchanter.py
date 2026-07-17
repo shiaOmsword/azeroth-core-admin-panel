@@ -13,6 +13,7 @@ from app.modules.acore_adapter.domain.acore_characters.entity.character_inventor
 from app.modules.acore_adapter.domain.acore_characters.item_instances.enchantments import (
     EnchantmentDefinition,
     EnchantmentSlot,
+    ItemEnchantments,
 )
 from app.modules.acore_adapter.domain.acore_characters.item_instances.errors import (
     EnchantmentNotFoundError,
@@ -207,6 +208,76 @@ class AutoEnchantCharacterUseCaseTests(unittest.IsolatedAsyncioTestCase):
 
         # Definitions are resolved once per unique ID, before item planning.
         self.assertEqual(catalog.calls, enchantment_ids)
+
+    async def test_overwrite_replaces_slots_7_to_11_and_clears_unused_slots(self) -> None:
+        enchantment_ids = [1107, 1074, 198]
+        use_case, uow, _, _ = self.build_use_case(
+            enchantment_ids=enchantment_ids,
+            known_ids=set(enchantment_ids),
+            items=[
+                equipment_item(
+                    663805,
+                    0,
+                    {
+                        EnchantmentSlot.PROPERTY_1.value: 343,
+                        EnchantmentSlot.PROPERTY_2.value: 353,
+                        EnchantmentSlot.PROPERTY_3.value: 999,
+                        EnchantmentSlot.PROPERTY_4.value: 888,
+                        EnchantmentSlot.PROPERTY_5.value: 777,
+                    },
+                    random_property_id=123,
+                ),
+            ],
+        )
+
+        result = await use_case.execute(
+            character_id=1305,
+            overwrite=True,
+        )
+
+        plan = result.items[0]
+        parsed = ItemEnchantments.from_string(plan.new_enchantments)
+
+        self.assertEqual(
+            [parsed.get(slot).enchantment_id for slot in ItemEnchantments.CUSTOM_SLOTS],
+            [1107, 1074, 198, 0, 0],
+        )
+        self.assertEqual(
+            [entry.slot for entry in plan.applied],
+            [
+                EnchantmentSlot.PROPERTY_1,
+                EnchantmentSlot.PROPERTY_2,
+                EnchantmentSlot.PROPERTY_3,
+            ],
+        )
+        self.assertEqual(
+            plan.cleared_slots,
+            (
+                EnchantmentSlot.PROPERTY_4,
+                EnchantmentSlot.PROPERTY_5,
+            ),
+        )
+        self.assertEqual(plan.skipped_enchantment_ids, ())
+        self.assertEqual(len(uow.item_instance.bulk_calls), 1)
+        self.assertEqual(uow.commit_count, 1)
+
+    async def test_overwrite_skips_enchantments_above_five_slots(self) -> None:
+        enchantment_ids = [1107, 1074, 198, 3833, 34, 195]
+        use_case, _, _, _ = self.build_use_case(
+            enchantment_ids=enchantment_ids,
+            known_ids=set(enchantment_ids),
+            items=[equipment_item(663805, 0)],
+        )
+
+        result = await use_case.execute(
+            character_id=1305,
+            overwrite=True,
+            dry_run=True,
+        )
+
+        plan = result.items[0]
+        self.assertEqual(len(plan.applied), 5)
+        self.assertEqual(plan.skipped_enchantment_ids, (195,))
 
     async def test_dry_run_calculates_without_bulk_update(self) -> None:
         use_case, uow, _, _ = self.build_use_case(

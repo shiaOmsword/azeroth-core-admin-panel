@@ -8,7 +8,7 @@ from app.common.cli.commands.characters.enchantment_input import (
 from .annotations import (
     Page, AccountId, CharacterName, CharacterId, Value, StrValue,
     ItemInstanceId, EnchantmentId, EnchantmentSlotOption, Overwrite, DryRun,
-    Enchantments, EnchantmentSets
+    Enchantments, EnchantmentSets, AutoEnchantOverwrite
 )
 app = typer.Typer(help="Команды для работы с персонажами")
 
@@ -58,11 +58,13 @@ def enchant_item(
 @app.command("auto-enchant")
 def auto_enchant(
     character_id: CharacterId,
+    overwrite: AutoEnchantOverwrite = False,
     dry_run: DryRun = False,
 ) -> None:
     asyncio.run(
         ASYNC_FUNCS_CHARACTERS_GROUP["auto_apply_enchants"](
             character_id=character_id,
+            overwrite=overwrite,
             dry_run=dry_run,
         )
     )

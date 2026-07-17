@@ -53,6 +53,7 @@ class AutoEnchantCharacterItemsUseCase:
         self,
         character_id: int,
         *,
+        overwrite: bool = False,
         dry_run: bool = False,
     ) -> AutoEnchantCharacterResult:
         async with self._uow_factory.characters_uow() as uow:
@@ -90,6 +91,7 @@ class AutoEnchantCharacterItemsUseCase:
                 self._planner.plan(
                     item=item,
                     enchantments_to_apply=definitions,
+                    overwrite=overwrite,
                 )
                 for item in equipped_items
             )
